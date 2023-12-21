@@ -59,7 +59,8 @@ taco = load_from_disk(PATH_TO_BAAI-TACO)
     taco_skills = dataset.filter(lambda entry: set(eval(entry['skill_types'])) & skills)
     ```
 
-## Statistics 
+## Statistics of TACO
+
 | Comparison Dimension        | TACO         | CodeContest   | APPS         | HumanEval(/-X) | MBP(/X)P      |
 |-----------------------------|--------------|---------------|--------------|-----------------|---------------|
 | Problem Scale (train/dev/test) | 25443/-/1000 | 13328/117/165 | 5000/-/5000  | -/-/164         | 374/-/500     |
@@ -74,16 +75,66 @@ taco = load_from_disk(PATH_TO_BAAI-TACO)
 
 
 ## Evaluation with TACO
-Here is an example of evaluate a 
+First, you should initialize model, tokenizer as well as the difficulties or skills to use TACO.
+
 ```Python
-from transformers import AutoTokenizer
-import transformers
-import torch
-model = "codellama/CodeLlama-7b-hf"
+# Initialize model and tokenizer
+model_name = 'codellama/CodeLlama-7b-hf'
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForCausalLM.from_pretrained(model_name)
+device = "cuda:0"
+model = model.to(device)
+
+
+# Initialize evaluation dataset 
+difficulties = ['ALL']
+# difficulties = ["EASY", "MEDIUM", "MEDIUM_HARD", "HARD", "VERY_HARD"] 
+# skills = ['ALL']
+# skills = ["Data structures", "Sorting", "Range queries", "Complete search", "Amortized analysis", "Dynamic programming", "Bit manipulation", "Greedy algorithms"]
+
+from datasets import load_dataset
+taco = load_dataset('BAAI/TACO', split='test', difficulties=difficulties)
+# taco = load_dataset('BAAI/TACO', split='test', skills=skills)
 ```
+Then, run generations with code models.
+```Python
+# setting up times of run
+n_samples = 200
+temperature = 0.2
+top_p = 0.95 
+output = []
+for idx, sample in enumerate(taco):
+    prompt = sample['question']
+    results = {"task_id": idx, "prompt": prompt}
+    generations = []
+    for i in range(n_samples):
+        seed = i
+        generation = predict(device, model, tokenizer, prompt, seed, top_p, temperature, max_length=2048)
+        clean_code = truncate_after_eof_strings(generation)
+        generations.append(clean_code)
+    results["output"] = generations
+    output.append(results)
+```
+`generation.py` gives a complete example of generate TACO result samples with CodeLlama.
+
 
 ## Finetuning with TACO
 
+
+## Evaluation Results
+We conducted experiments using the TACO test set and training set on GPT-4 and a code generation model trained on a large amount of code data. The results show:
+
+- The TACO test set is highly challenging, with GPT-4 achieving a pass@1 score of only 31.5 at the easy level. Except for GPT-4, the pass@1 scores of various code models across five difficulty levels are generally below 10. Even the pass@100 scores are not as high as GPT-4's pass@1.
+
+<center>
+<img src="assets/download.png" width="500"/>
+</center>
+
+- Utilizing the TACO training set with fine-grained labels can selectively enhance the performance of code generation models. For instance, after fine-tuning starcoder-1b on specific skills using the TACO training set, there is a noticeable improvement in performance.
+
+<center>
+<img src="assets/download1.png" width="300"/>
+</center>
 
 ## License
 The TACO dataset that is authored by BAAI, Shandong Normal University and Peking University is released under an [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0). However, the data also includes content licensed under other permissive licenses such as MIT License, or web-crawled data which is used under the terms of the CC BY 4.0 license([Creative Commons Attribution 4.0 International license](https://creativecommons.org/licenses/by/4.0/legalcode)).
