@@ -128,6 +128,9 @@ for idx, sample in enumerate(taco):
 ```
 `generation.py` gives a complete example of generate TACO result samples with CodeLlama.
 
+Finally, execute the generated codes and compute metrics.
+`compute_metric.py` gives a complete example of code execution and pass@k computation with `generation.json` from last step.
+
 
 ## Finetuning with TACO
 
