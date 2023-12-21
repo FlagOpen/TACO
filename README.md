@@ -33,16 +33,15 @@ taco = load_dataset('BAAI/TACO', token=YOUR_HF_TOKEN)
     taco = load_dataset('BAAI/TACO', skills=['Sorting', 'Range queries'], token=YOUR_HF_TOKEN)
     ```
 
+🤗 <a href="https://data.baai.ac.cn/details/BAAI-TACO">BAAI DataHub</a>
+## Train and Evaluation
+
 ## License
-
-The code is licensed under the
-[Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0).
-
-All non-code materials provided are made available under the terms of the CC BY 4.0 license ([Creative Commons Attribution 4.0 International license](https://creativecommons.org/licenses/by/4.0/legalcode)).
+The TACO dataset that is authored by BAAI, Shandong Normal University and Peking University is released under an [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0). However, the data also includes content licensed under other permissive licenses such as MIT License, or web-crawled data which is used under the terms of the CC BY 4.0 license([Creative Commons Attribution 4.0 International license](https://creativecommons.org/licenses/by/4.0/legalcode)).
 
 We gratefully acknowledge the contributions of the following:
-*   some AtCoder, Codeforces, CodeWars, Kattis, LeetCode materials are curated from APPS dataset (https://github.com/hendrycks/apps)
-*   some Aizu, AtCoder, CodeChef, Codeforces materials are curated from CodeContest dataset (https://github.com/google-deepmind/code_contests)
+*   some AtCoder, Codeforces, CodeWars, Kattis, LeetCode material curated from APPS dataset (https://github.com/hendrycks/apps)
+*   some Aizu, AtCoder, CodeChef, Codeforces material curated from CodeContest dataset (https://github.com/google-deepmind/code_contests)
 *   Codeforces materials are sourced from http://codeforces.com.
 *   CodeChef materials are sourced from https://www.codechef.com.
 *   GeekforGeeks materials are sourced from https://www.geeksforgeeks.org
