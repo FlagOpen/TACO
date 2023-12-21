@@ -181,7 +181,38 @@ The result file `taco_metrics.json` is like
 ```
 
 ## Finetuning with TACO
+First, you should tokenize the training set of TACO. We provide a python script `pretokenizing.py` and an example shell script `pretokenize.sh` to help you. This step would output a pretokenized training data in `cache_dir` with the name of `dataset_name`. Below is an example to tokenize with CodeLlama-7b. 
 
+```shell
+python pretokenizing.py \
+    --tokenizer_dir codellama/CodeLlama-7b-hf \
+    --cache_dir . \
+    --dataset_name codellama_tokenized 
+```
+
+Then, finetune with the pretokenized training data. We provide a python script `train.py` and an example shell script `finetune.sh` to help you. This step would output the checkpoints in `output_dir`. Below is an example to finetuning CodeLlama-7b. 
+
+```shell
+torchrun --nproc_per_node=8 --nnodes=1 train.py \
+    --model_name_or_path codellama/CodeLlama-7b-hf \
+    --data_path codellama_tokenized \
+    --bf16 True \
+    --output_dir codellama_ft \
+    --num_train_epochs 2 \
+    --per_device_train_batch_size 4 \
+    --gradient_accumulation_steps 8 \
+    --evaluation_strategy "no" \
+    --save_strategy "steps" \
+    --save_steps 500 \
+    --save_total_limit 1 \
+    --learning_rate 5e-5 \
+    --weight_decay 0.1 \
+    --warmup_ratio 0.1 \
+    --logging_steps 1 \
+    --resume_from_checkpoint True \
+    --gradient_checkpointing True \
+    --deepspeed ds_configs/deepspeed_z2_config_bf16.json
+```
 
 ## Evaluation Results
 We conducted experiments using the TACO test set and training set on GPT-4 and a code generation model trained on a large amount of code data. The results show:

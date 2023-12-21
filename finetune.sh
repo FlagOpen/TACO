@@ -1,0 +1,19 @@
+torchrun --nproc_per_node=8 --nnodes=1 train.py \
+    --model_name_or_path codellama/CodeLlama-7b-hf \
+    --data_path codellama_tokenized \
+    --bf16 True \
+    --output_dir codellama_ft \
+    --num_train_epochs 2 \
+    --per_device_train_batch_size 4 \
+    --gradient_accumulation_steps 8 \
+    --evaluation_strategy "no" \
+    --save_strategy "steps" \
+    --save_steps 500 \
+    --save_total_limit 1 \
+    --learning_rate 5e-5 \
+    --weight_decay 0.1 \
+    --warmup_ratio 0.1 \
+    --logging_steps 1 \
+    --resume_from_checkpoint True \
+    --gradient_checkpointing True \
+    --deepspeed ds_configs/deepspeed_z2_config_bf16.json
