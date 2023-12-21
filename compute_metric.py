@@ -135,7 +135,7 @@ def main():
     results = evaluate_generations(generations, taco)
     metrics = compute_metrics(results)
 
-    json.dump(metrics, open('taco_report.json', 'w'), indent=4)
+    json.dump(metrics, open('taco_metrics.json', 'w'), indent=4)
 
 if __name__ == "__main__":
     main()

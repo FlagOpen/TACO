@@ -126,11 +126,59 @@ for idx, sample in enumerate(taco):
     results["output"] = generations
     output.append(results)
 ```
-`generation.py` gives a complete example of generate TACO result samples with CodeLlama.
+`generation.py` gives a complete example of generate TACO result samples with CodeLlama, which outputs a JSON format file `generation.json`.
+```JSON
+[
+    {
+        "task_id": 0,
+        "prompt": "The city park of IT City contains n east to ...",
+        "output": [
+            "\ndef solve(n):\n    return n**5 - 10*n**4 + 40*n**3 ...",
+            "\ndef solve(n):\n    return n**5 - 10*n**4 + 40*n**3 ...",
+            ...
+        ]
+    },
+    {
+        "task_id": "1",
+        "prompt": "Zookeeper is buying a carton of fruit to feed ...",
+        "output": [
+            "\ndef solve(n, s):\n    pre, suf, ans = [0]*n, [0]*n, ...",
+            "\ndef solve(n, s):\n    pre, suf, ans = [0]*n, [0]*n, ...",
+            ...
+        ]
+    },
+    ...
+]
+```
 
 Finally, execute the generated codes and compute metrics.
 `compute_metric.py` gives a complete example of code execution and pass@k computation with `generation.json` from last step.
 
+The result file `taco_metrics.json` is like
+```JSON
+{
+    "pass@1": 0.0932,
+    "pass@10": 0.1515,
+    "pass@100": 0.1999,
+    "detail" : {
+        "pass@1": {
+            "0": ...,
+            "1": ...,
+            ...
+        },
+        "pass@10": {
+            "0": ...,
+            "1": ...,
+            ...
+        },
+        "pass@100": {
+            "0": ...,
+            "1": ...,
+            ...
+        },
+    }
+}
+```
 
 ## Finetuning with TACO
 
