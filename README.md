@@ -76,13 +76,13 @@ taco = load_from_disk(PATH_TO_BAAI-TACO)
 The Distribution of Algorithm Tags in TACO is 
 
 <center>
-<img src="assets/algo.png" width="600"/>
+<img src="assets/algo.png" width="900"/>
 </center>
 
 The Distribution of Programming Skills in TACO is
 
 <center>
-<img src="assets/eval_skill.png" width="450"/>
+<img src="assets/skill.png" width="900"/>
 </center>
 
 ## Evaluation with TACO
@@ -189,13 +189,13 @@ We conducted experiments using the TACO test set and training set on GPT-4 and a
 - The TACO test set is highly challenging, with GPT-4 achieving a pass@1 score of only 31.5 at the easy level. Except for GPT-4, the pass@1 scores of various code models across five difficulty levels are generally below 10. Even the pass@100 scores are not as high as GPT-4's pass@1.
 
 <center>
-<img src="assets/eval_diff.png" width="500"/>
+<img src="assets/eval_diff.png" width="900"/>
 </center>
 
 - Utilizing the TACO training set with fine-grained labels can selectively enhance the performance of code generation models. For instance, after fine-tuning starcoder-1b on specific skills using the TACO training set, there is a noticeable improvement in performance.
 
 <center>
-<img src="assets/eval_skill.png" width="300"/>
+<img src="assets/eval_skill.png" width="900"/>
 </center>
 
 ## License
