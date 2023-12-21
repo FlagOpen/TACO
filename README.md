@@ -34,6 +34,33 @@ taco = load_dataset('BAAI/TACO', token=YOUR_HF_TOKEN)
     ```
 
 <img src="assets/baai.png" width="18"/><a href="https://data.baai.ac.cn/details/BAAI-TACO">BAAI DataHub</a>
+First, download the dataset and unzip it into a folder named "BAAI-TACO."
+Then, load the dataset with the following program. 
+```Python
+from datasets import load_from_disk
+taco = load_from_disk(PATH_TO_BAAI-TACO)
+```
+- You can also specify the split ("train" or "test") through
+    ```Python
+    from datasets import load_from_disk
+    taco = load_from_disk(PATH_TO_BAAI-TACO)['train']
+    ```
+- You can also specify the difficulties (a list choosing from ["EASY", "MEDIUM", "MEDIUM_HARD", "HARD", "VERY_HARD"] or ["ALL"] as default) or skills (a list choosing from ["Data structures", "Sorting", "Range queries", "Complete search", "Amortized analysis", "Dynamic programming", "Bit manipulation", "Greedy algorithms"] or ["ALL"] as default) by passing the list of difficulties or skills as a list.
+    ```Python
+    from datasets import load_from_disk
+    difficulties=['EASY']
+    taco = load_from_disk(PATH_TO_BAAI-TACO)
+    taco_difficulties = dataset.filter(lambda entry: entry['difficulty'] in difficulties)
+    ```
+    ```Python
+    from datasets import load_from_disk
+    skills=set(['Sorting', 'Range queries'])
+    taco = load_from_disk(PATH_TO_BAAI-TACO)
+    taco_skills = dataset.filter(lambda entry: set(eval(entry['skill_types'])) & skills)
+    ```
+
+
+
 ## Train and Evaluation
 
 ## License
