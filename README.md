@@ -26,11 +26,11 @@ taco = load_dataset('BAAI/TACO', token=YOUR_HF_TOKEN)
 - You can also specify the difficulties (a list choosing from ["EASY", "MEDIUM", "MEDIUM_HARD", "HARD", "VERY_HARD"] or ["ALL"] as default) or skills (a list choosing from ["Data structures", "Sorting", "Range queries", "Complete search", "Amortized analysis", "Dynamic programming", "Bit manipulation", "Greedy algorithms"] or ["ALL"] as default) by passing the list of difficulties or skills as a list.
     ```Python
     from datasets import load_dataset
-    taco = load_dataset('BAAI/TACO', difficulties=['EASY'], token=YOUR_HF_TOKEN)
+    taco_difficulties = load_dataset('BAAI/TACO', difficulties=['EASY'], token=YOUR_HF_TOKEN)
     ```
     ```Python
     from datasets import load_dataset
-    taco = load_dataset('BAAI/TACO', skills=['Sorting', 'Range queries'], token=YOUR_HF_TOKEN)
+    taco_skills = load_dataset('BAAI/TACO', skills=['Sorting', 'Range queries'], token=YOUR_HF_TOKEN)
     ```
 
 <img src="assets/baai.png" width="18"/><a href="https://data.baai.ac.cn/details/BAAI-TACO">BAAI DataHub</a>
@@ -59,9 +59,31 @@ taco = load_from_disk(PATH_TO_BAAI-TACO)
     taco_skills = dataset.filter(lambda entry: set(eval(entry['skill_types'])) & skills)
     ```
 
+## Statistics 
+| Comparison Dimension        | TACO         | CodeContest   | APPS         | HumanEval(/-X) | MBP(/X)P      |
+|-----------------------------|--------------|---------------|--------------|-----------------|---------------|
+| Problem Scale (train/dev/test) | 25443/-/1000 | 13328/117/165 | 5000/-/5000  | -/-/164         | 374/-/500     |
+| No Answers in Test Set      | 0            | 43/165        | 1235/5000    | 0               | 0             |
+| Duplicate Questions         | No Duplication| No Duplication| No Duplication| Duplicates Removed| Duplicates Removed|
+| Duplicate Answers           | Duplicates Removed| No Duplication| No Duplication| Duplicates Removed| Duplicates Removed|
+| Test Cases/Problems     | 202.3        | 203.7         | 20.99        | 7.77            | 3             |
+| Task Topics                 | Yes          | Yes           | No           | No              | No            |
+| Algorithm Tags              | Yes          | No            | No           | No              | No            |
+| Programming Skills          | Yes          | No            | No           | No              | No            |
+| Difficulty Tags             | Yes          | Yes           | Yes          | No              | No            |
 
 
-## Train and Evaluation
+## Evaluation with TACO
+Here is an example of evaluate a 
+```Python
+from transformers import AutoTokenizer
+import transformers
+import torch
+model = "codellama/CodeLlama-7b-hf"
+```
+
+## Finetuning with TACO
+
 
 ## License
 The TACO dataset that is authored by BAAI, Shandong Normal University and Peking University is released under an [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0). However, the data also includes content licensed under other permissive licenses such as MIT License, or web-crawled data which is used under the terms of the CC BY 4.0 license([Creative Commons Attribution 4.0 International license](https://creativecommons.org/licenses/by/4.0/legalcode)).
