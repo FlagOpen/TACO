@@ -73,6 +73,17 @@ taco = load_from_disk(PATH_TO_BAAI-TACO)
 | Programming Skills          | Yes          | No            | No           | No              | No            |
 | Difficulty Tags             | Yes          | Yes           | Yes          | No              | No            |
 
+The Distribution of Algorithm Tags in TACO is 
+
+<center>
+<img src="assets/8d44a9d1-a135-4526-98e4-966c722a573f.png" width="600"/>
+</center>
+
+The Distribution of Programming Skills in TACO is
+
+<center>
+<img src="assets/89cc8b33-8298-45ec-a846-d7bdbb286fc2.png" width="450"/>
+</center>
 
 ## Evaluation with TACO
 First, you should initialize model, tokenizer as well as the difficulties or skills to use TACO.
