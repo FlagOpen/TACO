@@ -33,7 +33,7 @@ taco = load_dataset('BAAI/TACO', token=YOUR_HF_TOKEN)
     taco = load_dataset('BAAI/TACO', skills=['Sorting', 'Range queries'], token=YOUR_HF_TOKEN)
     ```
 
-🤗 <a href="https://data.baai.ac.cn/details/BAAI-TACO">BAAI DataHub</a>
+<img src="assets/baai.png" width="18"/><a href="https://data.baai.ac.cn/details/BAAI-TACO">BAAI DataHub</a>
 ## Train and Evaluation
 
 ## License
