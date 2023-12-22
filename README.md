@@ -1,6 +1,8 @@
 <div style="text-align: center;">
     <img src="assets/taco_logo.png" width="200" height="200">
-</div># TACO
+</div>
+
+# TACO(Topics in Algorithmic COde generation dataset)
 
 TACO (Topics in Algorithmic COde generation dataset) is a dataset focused on algorithmic code generation, designed to provide a more challenging training dataset and evaluation benchmark for the code generation model field. The dataset consists of programming competition problems that are more difficult and closer to real programming scenarios. It emphasizes improving or evaluating the model's understanding and reasoning abilities in practical application scenarios, rather than just implementing predefined function functionalities.
 
