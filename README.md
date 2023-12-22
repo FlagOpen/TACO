@@ -1,6 +1,6 @@
-<div style="text-align: center;">
-    <img src="assets/taco_logo.png" width="200" height="200">
-</div>
+<p align="center">
+  <img src="assets/taco_logo.png" width="200" height="200">
+</p>
 
 # TACO(Topics in Algorithmic COde generation dataset)
 
