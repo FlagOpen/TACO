@@ -229,6 +229,9 @@ We conducted experiments using the TACO test set and training set on GPT-4 and a
 <img src="assets/eval_skill.png" width="600"/>
 </center>
 
+## Citation
+The technical report will be published soon.
+
 ## License
 The TACO dataset that is authored by BAAI, Shandong Normal University and Peking University is released under an [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0). However, the data also includes content licensed under other permissive licenses such as MIT License, or web-crawled data which is used under the terms of the CC BY 4.0 license([Creative Commons Attribution 4.0 International license](https://creativecommons.org/licenses/by/4.0/legalcode)).
 
