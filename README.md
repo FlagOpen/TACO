@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/taco_logo.png" width="300" height="200">
+  <img src="assets/taco_logo.png" width="300" height="300">
 </p>
 
 # TACO(Topics in Algorithmic COde generation dataset)
