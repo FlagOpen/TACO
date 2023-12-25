@@ -241,10 +241,10 @@ We conducted experiments using the TACO test set and training set on GPT-4 and a
 If you use the models, data, or code from this project, please cite the original paper:
 
 ```
-@article{yue2023mammoth,
-  title={MAmmoTH: Building Math Generalist Models through Hybrid Instruction Tuning},
-  author={Xiang Yue, Xingwei Qu, Ge Zhang, Yao Fu, Wenhao Huang, Huan Sun, Yu Su, Wenhu Chen},
-  journal={arXiv preprint arXiv:2309.05653},
+@article{li2023taco,
+  title={TACO: Topics in Algorithmic COde generation dataset},
+  author={Rongao Li and Jie Fu and Bo-Wen Zhang and Tao Huang and Zhihong Sun and Chen Lyu and Guang Liu and Zhi Jin and Ge Li},
+  journal={arXiv preprint arXiv:2312.14852},
   year={2023}
 }
 ```
