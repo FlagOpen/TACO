@@ -225,17 +225,16 @@ torchrun --nproc_per_node=8 --nnodes=1 train.py \
 ## Evaluation Results
 We conducted experiments using the TACO test set and training set on GPT-4 and a code generation model trained on a large amount of code data. The results show:
 
-- The TACO test set is highly challenging, with GPT-4 achieving a pass@1 score of only 31.5 at the easy level. Except for GPT-4, the pass@1 scores of various code models across five difficulty levels are generally below 10. Even the pass@100 scores are not as high as GPT-4's pass@1.
-
-<center>
-<img src="assets/eval_diff.png" width="600"/>
-</center>
+- The TACO test set is highly challenging, with GPT-4 achieving a pass@1 score of only 31.5 at the easy level. Except for GPT-4, the pass@1 scores of various code models across five difficulty levels are generally below 10. Even the pass@100 scores are not as high as GPT-4's pass@1
+    <center>
+    <img src="assets/eval_diff.png" width="600"/>
+    </center>
 
 - Utilizing the TACO training set with fine-grained labels can selectively enhance the performance of code generation models. For instance, after fine-tuning starcoder-1b on specific skills using the TACO training set, there is a noticeable improvement in performance.
 
-<center>
-<img src="assets/eval_skill.png" width="600"/>
-</center>
+    <center>
+    <img src="assets/eval_skill.png" width="600"/>
+    </center>
 
 ## Citation
 If you use the models, data, or code from this project, please cite the original paper:
