@@ -3,6 +3,10 @@
 </p>
 
 # TACO(Topics in Algorithmic COde generation dataset)
+<p align="center">
+        🤗 <a href="https://huggingface.co/datasets/BAAI/TACO">Hugging Face</a>&nbsp&nbsp | &nbsp&nbsp <a href="https://data.baai.ac.cn/details/BAAI-TACO"><img src="assets/baai.png" width="18"/> BAAI DataHub</a>&nbsp&nbsp | &nbsp&nbsp <a href="https://arxiv.org/abs/2312.14852">Paper</a>
+</p>
+<br>
 
 TACO (Topics in Algorithmic COde generation dataset) is a dataset focused on algorithmic code generation, designed to provide a more challenging training dataset and evaluation benchmark for the code generation model field. The dataset consists of programming competition problems that are more difficult and closer to real programming scenarios. It emphasizes improving or evaluating the model's understanding and reasoning abilities in practical application scenarios, rather than just implementing predefined function functionalities.
 
@@ -234,7 +238,15 @@ We conducted experiments using the TACO test set and training set on GPT-4 and a
 </center>
 
 ## Citation
-The technical report will be published soon.
+If you use the models, data, or code from this project, please cite the original paper:
+
+```
+@article{yue2023mammoth,
+  title={MAmmoTH: Building Math Generalist Models through Hybrid Instruction Tuning},
+  author={Xiang Yue, Xingwei Qu, Ge Zhang, Yao Fu, Wenhao Huang, Huan Sun, Yu Su, Wenhu Chen},
+  journal={arXiv preprint arXiv:2309.05653},
+  year={2023}
+}
 
 ## License
 The TACO dataset that is authored by BAAI, Shandong Normal University and Peking University is released under an [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0). However, the data also includes content licensed under other permissive licenses such as MIT License, or web-crawled data which is used under the terms of the CC BY 4.0 license([Creative Commons Attribution 4.0 International license](https://creativecommons.org/licenses/by/4.0/legalcode)).
