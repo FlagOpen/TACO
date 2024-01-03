@@ -58,13 +58,13 @@ taco = load_from_disk(PATH_TO_BAAI-TACO)
     from datasets import load_from_disk
     difficulties=['EASY']
     taco = load_from_disk(PATH_TO_BAAI-TACO)
-    taco_difficulties = dataset.filter(lambda entry: entry['difficulty'] in difficulties)
+    taco_difficulties = taco.filter(lambda entry: entry['difficulty'] in difficulties)
     ```
     ```Python
     from datasets import load_from_disk
     skills=set(['Sorting', 'Range queries'])
     taco = load_from_disk(PATH_TO_BAAI-TACO)
-    taco_skills = dataset.filter(lambda entry: set(eval(entry['skill_types'])) & skills)
+    taco_skills = taco.filter(lambda entry: set(eval(entry['skill_types'])) & skills)
     ```
 
 ## Statistics of TACO
