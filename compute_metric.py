@@ -95,7 +95,7 @@ def estimate_pass_at_k(num_samples, num_correct, k):
     return np.array([estimator(int(n), int(c), k) for n, c in zip(num_samples_it, num_correct)])
         
 
-def compute_metrics(results, statistics, k_list=[1, 10, 100], report_type=['difficulty', 'skill'], difficulty=None, raw=None, tag=None, skill=None):
+def compute_metrics(results, k_list=[1, 10, 100], report_type=['difficulty', 'skill'], difficulty=None, raw=None, tag=None, skill=None):
     total = []
     correct = []
     task_ids = []
