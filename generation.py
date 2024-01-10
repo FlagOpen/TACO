@@ -81,13 +81,13 @@ for idx, sample in enumerate(taco):
     prompt = "\nQUESTION:\n"
     prompt += sample["question"]
     starter_code = None if len(sample["starter_code"]) == 0 else sample["starter_code"]
-        try:
-            input_outpout = json.loads(sample["input_output"])
-            fn_name = (
-                None if not input_outpout.get("fn_name") else input_outpout["fn_name"]
-            )
-        except ValueError:
-            fn_name = None
+    try:
+        input_outpout = json.loads(sample["input_output"])
+        fn_name = (
+            None if not input_outpout.get("fn_name") else input_outpout["fn_name"]
+        )
+    except ValueError:
+        fn_name = None
     if starter_code:
             prompt += starter_code
         if (not fn_name) and (not starter_code):
