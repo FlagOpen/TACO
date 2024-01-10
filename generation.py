@@ -89,7 +89,7 @@ for idx, sample in enumerate(taco):
     except ValueError:
         fn_name = None
     if starter_code:
-            prompt += starter_code
+        prompt += starter_code
         if (not fn_name) and (not starter_code):
             call_format = "\nUse Standard Input format"
             prompt += call_format
