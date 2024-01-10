@@ -78,7 +78,25 @@ top_p = 0.95
 
 output = []
 for idx, sample in enumerate(taco):
-    prompt = sample['question']
+    prompt = "\nQUESTION:\n"
+    prompt += sample["question"]
+    starter_code = None if len(sample["starter_code"]) == 0 else sample["starter_code"]
+        try:
+            input_outpout = json.loads(sample["input_output"])
+            fn_name = (
+                None if not input_outpout.get("fn_name") else input_outpout["fn_name"]
+            )
+        except ValueError:
+            fn_name = None
+    if starter_code:
+            prompt += starter_code
+        if (not fn_name) and (not starter_code):
+            call_format = "\nUse Standard Input format"
+            prompt += call_format
+        else:
+            call_format = "\nUse Call-Based format"
+            prompt += call_format
+        prompt += "\nANSWER:\n"
     results = {"task_id": idx, "prompt": prompt}
     generations = []
     for i in range(n_samples):
