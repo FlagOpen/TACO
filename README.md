@@ -14,6 +14,9 @@ TACO (Topics in Algorithmic COde generation dataset) is a dataset focused on alg
 - Higher quality: Each problem in the TACO dataset is designed to match a diverse set of solution answers, with answer sizes of up to 1.55M. This ensures that the model is not prone to overfitting during training and validates the effectiveness of evaluation results.
 - Fine-grained labels: Each problem in the TACO dataset includes fine-grained labels such as task topics, algorithms, skills, and difficulty levels. These labels provide more accurate references for the training and evaluation of code generation models.
 
+## News and Updates
+- 2024.04.11 Hello world!🌍✨ We're excited to announce that all models from our TACO research are now available on Hugging Face!🚀 You can download our SFT models from the following link: https://huggingface.co/FlagOpen 📥🤗. Please note that our models have been trained solely on the training split of the TACO dataset. Happy coding! 💻🎉
+
 ## Download and Use
 🤗 <a href="https://huggingface.co/datasets/BAAI/TACO">Hugging Face</a>
 
