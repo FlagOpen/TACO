@@ -15,9 +15,9 @@ TACO (Topics in Algorithmic COde generation dataset) is a dataset focused on alg
 - Fine-grained labels: Each problem in the TACO dataset includes fine-grained labels such as task topics, algorithms, skills, and difficulty levels. These labels provide more accurate references for the training and evaluation of code generation models.
 
 ## News and Updates
-- 2024.06.19 🚀 Announcing Testing Framework Update: Bug Fixes and Enhanced Functionality! We're excited to announce the release of our first version after extensive manual validation and debugging efforts. In this update, we've addressed several bugs in our testing framework for the quoted APPS dataset. We double-checked the test cases and updated TACO test set to a new version. 
+- 2024.06.19 🚀 **Announcing Testing Framework Update: Bug Fixes and Enhanced Functionality!** We're excited to announce the release of our first version after extensive manual validation and debugging efforts. In this update, we've addressed several bugs in our testing framework for the quoted [APPS](https://github.com/hendrycks/apps) benchmark. We double-checked the test cases and updated TACO test set to a new version. 
 
-- 2024.04.11 Hello world!🌍✨ We're excited to announce that all models from our TACO research are now available on Hugging Face!🚀 You can download our SFT models from the following link: https://huggingface.co/FlagOpen 📥🤗. Please note that our models have been trained solely on the training split of the TACO dataset. Happy coding! 💻🎉
+- 2024.04.11 🚀 **Announcing the Release of Part of TACO (Topics in Algorithm for Code) Project Models on Hugging Face!** We've full fine-tuned top-tier code models like [CodeLlama](https://huggingface.co/meta-llama/CodeLlama-7b-hf) and [Starcoder](https://huggingface.co/bigcode/starcoder), ranging from 1B to 15B parameters, specifically tailored for competitive algorithmic challenges. Check out our models under [FlagOpen](https://huggingface.co/flagopen) on Hugging Face. Join us in advancing the Code & LLMs community! 🏋️‍♂️👩‍💻
 
 ## Download and Use
 🤗 <a href="https://huggingface.co/datasets/BAAI/TACO">Hugging Face</a>
