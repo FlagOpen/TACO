@@ -10,9 +10,9 @@
 
 TACO (Topics in Algorithmic COde generation dataset) is a dataset focused on algorithmic code generation, designed to provide a more challenging training dataset and evaluation benchmark for the code generation model field. The dataset consists of programming competition problems that are more difficult and closer to real programming scenarios. It emphasizes improving or evaluating the model's understanding and reasoning abilities in practical application scenarios, rather than just implementing predefined function functionalities.
 
-- Larger scale: TACO includes a training set (25,443 problems) and a test set (1,000 problems), making it the largest code generation dataset currently available.
-- Higher quality: Each problem in the TACO dataset is designed to match a diverse set of solution answers, with answer sizes of up to 1.55M. This ensures that the model is not prone to overfitting during training and validates the effectiveness of evaluation results.
-- Fine-grained labels: Each problem in the TACO dataset includes fine-grained labels such as task topics, algorithms, skills, and difficulty levels. These labels provide more accurate references for the training and evaluation of code generation models.
+- **Larger scale**: TACO includes a training set (25,443 problems) and a test set (1,000 problems), making it the largest code generation dataset currently available.
+- **Higher quality:** Each problem in the TACO dataset is designed to match a diverse set of solution answers, with answer sizes of up to 1.55M. This ensures that the model is not prone to overfitting during training and validates the effectiveness of evaluation results.
+- **Fine-grained labels:** Each problem in the TACO dataset includes fine-grained labels such as task topics, algorithms, skills, and difficulty levels. These labels provide more accurate references for the training and evaluation of code generation models.
 
 ## News and Updates
 - 2024.06.19 🚀 **Announcing Testing Framework Update: Bug Fixes and Enhanced Functionality!** We're excited to announce the release of our first version after extensive manual validation and debugging efforts. In this update, we've addressed several bugs in our testing framework for the quoted [APPS](https://github.com/hendrycks/apps) benchmark. We double-checked the test cases and updated TACO test set to a new version. 
