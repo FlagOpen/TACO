@@ -84,7 +84,7 @@ def run_test(sample, test=None, debug=False):
                 detail_results, debug_infos = execute_cb_code(method_func, inputs_list, outputs_list, timeout=TIMEOUT, early_stop=False, debug=debug)
             elif which_type == CODE_TYPE.standard_input:
                 detail_results = execute_std_code(exec_code, inputs_list, outputs_list, timeout=TIMEOUT, early_stop=False, debug=debug)
-                debug_infos = results.get('debug', None)
+                debug_infos = detail_results.get('debug', None)
                 detail_results = {k:v for k, v in detail_results.items() if k!='debug'}
                 if set(detail_results.values()) == {(False, 'returncode:1')}:
                     detail_results = execute_std_code(synthesized_code+'\ncode()\n', inputs_list, outputs_list, timeout=TIMEOUT, early_stop=False, debug=debug)
