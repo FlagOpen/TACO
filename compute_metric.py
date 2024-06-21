@@ -19,7 +19,7 @@ def check_correctness(sample, generation, timeout, debug=True):
     result = manager.list()
     p = multiprocessing.Process(target=_temp_run, args=(sample, generation, debug, result))
     p.start()
-    p.join(timeout=timeout + 1)
+    p.join()
     if p.is_alive():
         p.kill()
     if not result:
