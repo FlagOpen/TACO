@@ -1,4 +1,4 @@
-# modifed from https://github.com/hendrycks/apps/blob/main/eval/testing_util.py to fix some evaluation bugs
+# modifed from https://github.com/hendrycks/apps/blob/main/eval/testing_util.py to fix some evaluation bugs and add instructions
 
 from .pyext2 import RuntimeModule
 import signal
