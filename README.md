@@ -15,7 +15,7 @@ TACO (Topics in Algorithmic COde generation dataset) is a dataset focused on alg
 - **Fine-grained labels:** Each problem in the TACO dataset includes fine-grained labels such as task topics, algorithms, skills, and difficulty levels. These labels provide more accurate references for the training and evaluation of code generation models.
 
 ## News and Updates
-- 2024.06.19 🚀 **Announcing Testing Framework Update: Bug Fixes and Enhanced Functionality!** We're excited to announce the release of our first version after extensive manual validation and debugging efforts. In this update, we've addressed several bugs in our testing framework for the quoted [APPS](https://github.com/hendrycks/apps) benchmark. We double-checked the test cases and updated TACO test set to a new version.
+- 2024.06.19 🚀 **Announcing Testing Framework Update: Bug Fixes and Enhanced Functionality!** We're excited to announce the release of our first version after extensive manual validation and debugging efforts. In this update, we've addressed several bugs in our testing framework for the quoted APPS benchmark. We double-checked the test cases and updated TACO test set to a new version.
 
   Details on the fixes can be found [here](https://github.com/FlagOpen/TACO/commit/2ba62351f3d511b08e52e3204198d5fafa006230). 
 
