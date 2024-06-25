@@ -16,6 +16,7 @@ TACO (Topics in Algorithmic COde generation dataset) is a dataset focused on alg
 
 ## News and Updates
 - 2024.06.19 🚀 **Announcing Testing Framework Update: Bug Fixes and Enhanced Functionality!** We're excited to announce the release of our first version after extensive manual validation and debugging efforts. In this update, we've addressed several bugs in our testing framework for the quoted [APPS](https://github.com/hendrycks/apps) benchmark. We double-checked the test cases and updated TACO test set to a new version.
+
   Details on the fixes can be found [here](https://github.com/FlagOpen/TACO/commit/2ba62351f3d511b08e52e3204198d5fafa006230). 
 
 - 2024.04.11 🚀 **Announcing the Release of Part of TACO (Topics in Algorithm for Code) Project Models on Hugging Face!** We've full fine-tuned top-tier code models like [CodeLlama](https://huggingface.co/meta-llama/CodeLlama-7b-hf) and [Starcoder](https://huggingface.co/bigcode/starcoder), ranging from 1B to 15B parameters, specifically tailored for competitive algorithmic challenges. Check out our models under [FlagOpen](https://huggingface.co/flagopen) on Hugging Face. Join us in advancing the Code & LLMs community! 🏋️‍♂️👩‍💻
