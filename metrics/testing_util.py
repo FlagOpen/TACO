@@ -158,6 +158,11 @@ def compile_and_get_func(program, which_type, method_name, timeout, debug):
         return False
     return method
 
+import re
+def convert_main_func(code:str):
+    pattern = r'__name__\s*==\s*["\']__main__["\']'
+    return re.sub(pattern, 'True', code)
+
 def synthesize_cb_code(raw_code, debug=False):
     sol = "import sys\nimport time\nimport itertools\nfrom itertools import accumulate, product, permutations, combinations\nimport collections\nfrom collections import Counter, OrderedDict, deque, defaultdict, ChainMap\nfrom functools import lru_cache\nimport math\nfrom math import sqrt, sin, cos, tan, ceil, fabs, floor, gcd, exp, log, log2\nimport fractions\nfrom typing import List, Tuple\nimport numpy as np\nimport random\nimport heapq\nfrom heapq import *\n"
     if debug:
@@ -173,7 +178,7 @@ def synthesize_std_code(raw_code, debug=False):
     sol = "" # code for compile
     sol2 = "" # code for execute
 
-    tmp_test = raw_code.split("\n")
+    tmp_test = convert_main_func(raw_code).split("\n")
     # define the code line type, 1 for import lines, 2 for import * lines with indent, 0 for normal codes
     code_types = [] 
 

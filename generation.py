@@ -1,10 +1,14 @@
-from transformers import AutoTokenizer, AutoModelForCausalLM
+from transformers import AutoTokenizer, AutoModelForCausalLM, PreTrainedModel, PreTrainedTokenizerBase, LlamaForCausalLM, LlamaTokenizer
 import transformers
 import torch
 
+import os
 import re
 import json
-EOF_STRINGS = ["\nQUESTION", "\n---", "\nANSWER", "<|endoftext|>"]
+from tqdm import tqdm
+from utils import get_taco_dataset
+from prompts import *
+EOF_STRINGS = ["\nQUESTION", "\n---", "\nANSWER", "<|endoftext|>", "<|EOT|>", "<｜end▁of▁sentence｜>"]
 
 def truncate_after_eof_strings(text):
     pattern = '|'.join(re.escape(s) for s in EOF_STRINGS)
@@ -31,7 +35,7 @@ def decode(tokenizer, raw_text_len, output):
         sents.append(sent)
     return sents
 
-def predict(device, model, tokenizer, prompt, seed, topp, t, max_length=2048):
+def predict(device, model: LlamaForCausalLM, tokenizer: LlamaTokenizer, prompt, seed, topp, t, max_length=2048):
     set_random_seed(seed)
     _prompt = tokenizer(prompt, truncation=False, return_tensors="pt")
     input_ids = _prompt["input_ids"]
@@ -44,66 +48,61 @@ def predict(device, model, tokenizer, prompt, seed, topp, t, max_length=2048):
             temperature = t,
             top_p = topp,
             max_new_tokens = max_length,
+            eos_token_id = tokenizer.eos_token_id,
+            pad_token_id = tokenizer.pad_token_id,
         )
         output = decode(tokenizer, raw_text_len, output) 
     return output[0]
 
 
 
+
 # Initialize model and tokenizer
-model_name = 'codellama/CodeLlama-7b-hf'
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForCausalLM.from_pretrained(model_name)
+from configs import paths
+model_path = paths.model_path
+model_name = 'models--deepseek-ai--deepseek-coder-7b-instruct-v1.5' # 'deepseek-ai/deepseek-coder-6.7b-instruct'
+tokenizer = AutoTokenizer.from_pretrained(model_path+model_name)
+model = AutoModelForCausalLM.from_pretrained(model_path+model_name)
 device = "cuda:0"
 model = model.to(device)
+print(tokenizer)
 
 
 # Initialize evaluation dataset 
-difficulties = ['ALL']
+# difficulties = ['ALL']
 # difficulties = ["EASY", "MEDIUM", "MEDIUM_HARD", "HARD", "VERY_HARD"] 
 # skills = ['ALL']
 # skills = ["Data structures", "Sorting", "Range queries", "Complete search", "Amortized analysis", "Dynamic programming", "Bit manipulation", "Greedy algorithms"]
 
-from datasets import load_dataset
-taco = load_dataset('BAAI/TACO', split='test', difficulties=difficulties)
+# from datasets import load_dataset
+# taco = load_dataset('BAAI/TACO', split='test', difficulties=difficulties)
 # taco = load_dataset('BAAI/TACO', split='test', skills=skills)
+taco = get_taco_dataset(split='test', difficulties=["EASY"])
 
-output_file = 'generations.json'
+output_file = 'results/generations/deepseek-coder-7b-instruct-v1.5/EASY-prompttest/n10_t0.5/generations.json'
+prompt_func = get_prompt_code_test
+os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
 # setting up times of run
-n_samples = 200
-temperature = 0.2
+n_samples = 10
+temperature = 0.5
 top_p = 0.95 
 
 
 output = []
-for idx, sample in enumerate(taco):
-    prompt = "\nQUESTION:\n"
-    prompt += sample["question"]
-    starter_code = None if len(sample["starter_code"]) == 0 else sample["starter_code"]
-    try:
-        input_outpout = json.loads(sample["input_output"])
-        fn_name = (
-            None if not input_outpout.get("fn_name") else input_outpout["fn_name"]
-        )
-    except ValueError:
-        fn_name = None
-    if starter_code:
-        prompt += starter_code
-    if (not fn_name) and (not starter_code):
-        call_format = "\nUse Standard Input format"
-        prompt += call_format
-    else:
-        call_format = "\nUse Call-Based format"
-        prompt += call_format
-    prompt += "\nANSWER:\n"
+prompt_sample = prompt_func(taco[0], tokenizer)
+print(prompt_sample)
+for idx, sample in tqdm(enumerate(taco), total=len(taco), desc="Generating", position=0, leave=True):
+    prompt = prompt_func(sample, tokenizer)
     results = {"task_id": idx, "prompt": prompt}
     generations = []
-    for i in range(n_samples):
+    for i in tqdm(range(n_samples), desc=f"Sampling {n_samples} samples", position=1, leave=False):
         seed = i
         generation = predict(device, model, tokenizer, prompt, seed, top_p, temperature, max_length=2048)
         clean_code = truncate_after_eof_strings(generation)
         generations.append(clean_code)
+    # lens = [len(g) for g in generations]
+    # print(lens)
     results["output"] = generations
     output.append(results)
 

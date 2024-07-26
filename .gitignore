@@ -1,0 +1,7 @@
+__pycache__/
+.vscode/
+
+results/
+hidden/
+configs/
+input.txt
