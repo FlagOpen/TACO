@@ -76,6 +76,44 @@ def evaluate_generations(generations, samples, idx=None, debug=False):
         idx += 1
     return results
 
+def process_generation(args):
+    task_id, sample, problem_generations, debug = args
+    res = []
+    for o_idx, o in enumerate(problem_generations):
+        curr_res = [-2]
+        try:
+            curr_res = check_correctness(sample, o, timeout=TIMEOUT, debug=debug)
+            if debug:
+                print(f"\nSuccessful compilation of task {o_idx}!")
+            fixed = []
+            for e in curr_res:
+                if isinstance(e, np.ndarray):
+                    e = e.item(0)
+                if isinstance(e, np.bool_):
+                    e = bool(e)
+                fixed.append(e)
+            curr_res = fixed
+            if not np.all(curr_res):
+                if debug:
+                    print(f"Results were not True for all test cases")
+        except Exception as e:
+            if debug:
+                print(f"Compilation failed, test framework exception = {repr(e)}{e}\n")
+            break
+        finally:
+            assert isinstance(curr_res, list)
+            res.append(curr_res)
+    return task_id, res
+
+def evaluate_generations_parallel(generations, samples, idx=None, debug=False):
+    assert len(generations.keys()) == len(samples)
+    args = [(task_id, samples[i], problem_generations, debug) for i, (task_id, problem_generations) in enumerate(generations.items())]
+    import multiprocessing as mp
+    with mp.Pool(mp.cpu_count()) as pool:
+        results_list = pool.map(process_generation, args)
+    
+    results = {task_id: res for task_id, res in results_list}
+    return results
 
 def estimate_pass_at_k(num_samples, num_correct, k):
     """Estimates pass@k of each problem and returns them in an array."""
@@ -133,6 +171,8 @@ def main():
     generations = load_generation(generation_file)
 
     results = evaluate_generations(generations, taco)
+    # You can use evaluate_generations_parallel to parallel executing multiple outputs for each problem
+    # results = evaluate_generations_parallel(generations, taco)
     metrics = compute_metrics(results)
 
     json.dump(metrics, open('taco_metrics.json', 'w'), indent=4)
