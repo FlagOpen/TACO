@@ -6,8 +6,9 @@ import numpy as np
 
 # used for debugging to time steps
 from datetime import datetime
+import time
 
-import os, sys, json
+import os, sys, json, shutil
 import faulthandler
 
 import subprocess
@@ -283,7 +284,11 @@ def execute_cb_code(method, inputs_list, outputs_list, timeout, early_stop=False
                 }
     return results, debug_infos
 
-def remove_tmp_files():
+def remove_tmp_files(path=None):
+    if path is not None:
+        if os.path.exists(path):
+            shutil.rmtree(path)
+            return None
     tmp_files = ['input.txt', 'output.txt']
     for tmp_file in tmp_files:
         if tmp_file in os.listdir('.'):
@@ -298,8 +303,9 @@ def execute_std_code(synthesized_code, inputs_list, outputs_list, timeout, early
     exec_results = {}
     if debug:
         exec_results['debug'] = {}
+    stamp = int(time.time()*1000000)
     for i, inputs in enumerate(inputs_list):
-        remove_tmp_files()
+        remove_tmp_files(f'./tmp/{stamp}')
         outputs = outputs_list[i]
         if isinstance(inputs, list):
             inputs = "\n".join(inputs)
@@ -327,12 +333,14 @@ def execute_std_code(synthesized_code, inputs_list, outputs_list, timeout, early
                         exec_code = 0
                 except:
                     try:
-                        inputs_tmp_file = 'input.txt'
+                        stamp = int(time.time()*1000000)
+                        os.makedirs(f'./tmp/{stamp}', exist_ok=True)
+                        inputs_tmp_file = f'./tmp/{stamp}/input_{i}.txt'
                         with open(inputs_tmp_file, 'w') as ftemp:
                             ftemp.write(inputs)
                         result = subprocess.run(['python', temp_program_path], text=True, timeout=timeout)
                         assert result.returncode == 0
-                        if compare_std_results(open('output.txt').read(), outputs, debug):
+                        if compare_std_results(open(f'./tmp/{stamp}/output_{i}.txt').read(), outputs, debug):
                             exec_code = 1
                         else:
                             exec_code = 0
