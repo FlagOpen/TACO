@@ -1,5 +1,6 @@
 from metrics.testing_util import run_test
 import json, os
+import time
 import multiprocessing
 import numpy as np
 from typing import Dict
@@ -65,10 +66,6 @@ def process_generation(args):
     # sample_copy['solutions'] = eval(sample_copy['solutions'])[:1]
     # print(json.dumps(sample_copy, indent=4, ensure_ascii=False))
     # import pdb; pdb.set_trace()
-    # if task_id==126:
-    #     import pdb; pdb.set_trace()
-    # else:
-    #     continue
     # loop over the generations
     for o_idx, o in enumerate(problem_generations):
         # import pdb; pdb.set_trace()
@@ -117,18 +114,41 @@ def evaluate_generations(generations, samples, idx=None, debug=False, ref_code_f
         sample = samples[task_id]
         args = (task_id, sample, problem_generations, debug, ref_code_fix)
         _, res = process_generation(args)
+        # print(f"Problem {task_id} evaluation finished, result: {res}")
         results[task_id] = res
         idx += 1
     return results
 
-def evaluate_generations_parallel(generations, samples, idx=None, debug=False):
+def evaluate_generations_parallel(generations, samples, idx=None, debug=False, ref_code_fix=True, nproc = -1):
     assert len(generations.keys()) == len(samples)
-    args = [(task_id, samples[i], problem_generations, debug) for i, (task_id, problem_generations) in enumerate(generations.items())]
     import multiprocessing as mp
-    with mp.Pool(mp.cpu_count()) as pool:
-        results_list = pool.map(process_generation, args)
+    def mp_worker(task, args, semaphore, result_queue, info = None):
+        with semaphore:
+            task_id = args[0]
+            print(f"evaluating {task_id}-th problem")
+            result = task(args)
+            result_queue.put(result)
+            print(f"Problem {task_id} evaluation finished, result: {result}")
+            time.sleep(1)
+
+    if nproc == -1:
+        nproc = mp.cpu_count()
+    semaphore = multiprocessing.Semaphore(nproc)
+    args_list = [(task_id, samples[task_id], problem_generations, debug, ref_code_fix) for i, (task_id, problem_generations) in enumerate(generations.items())]
+    result_queue = multiprocessing.Queue()
+    processes = []
+    for args in args_list:
+        p = multiprocessing.Process(target=mp_worker, args=(process_generation, args, semaphore, result_queue))
+        processes.append(p)
+        p.start()
+
+    for p in processes:
+        p.join()
     
-    results = {task_id: res for task_id, res in results_list}
+    results = {}
+    while not result_queue.empty():
+        task_id, res = result_queue.get()
+        results[task_id]=res
     return results
 
 def evaluate_ref_codes(sample, max_used_sols=-1):
@@ -228,6 +248,7 @@ def main():
     parser.add_argument('--split', type=str, default='test', help='split of the dataset (train, val, test)')
     parser.add_argument('--debug', action='store_true', help='print debug information')
     parser.add_argument('--skip', action='store_true', help='skip')
+    parser.add_argument('--nproc', type=int, default=1, help='num procs for evalutaion')
     args = parser.parse_args()
 
     with open(args.dataset_config, 'r') as f:
@@ -240,10 +261,12 @@ def main():
     if args.skip and os.path.exists(os.path.join(args.result_path, 'taco_metrics.json')):
         metrics = json.load(open(os.path.join(args.result_path, 'taco_metrics.json')))
     else:
-        results = evaluate_generations(generations, taco, debug=args.debug)
+        if args.nproc == 1:
+            results = evaluate_generations(generations, taco, debug=args.debug)
+        else:
+            # You can use evaluate_generations_parallel to parallel executing multiple outputs for each problem
+            results = evaluate_generations_parallel(generations, taco, debug=args.debug, nproc = args.nproc)
         metrics = compute_metrics(results)
-        # You can use evaluate_generations_parallel to parallel executing multiple outputs for each problem
-        # results = evaluate_generations_parallel(generations, taco)
     metrics = by_difficulties(metrics, taco)
 
     json.dump(metrics, open(os.path.join(args.result_path, 'taco_metrics.json'), 'w'), indent=4)
