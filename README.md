@@ -2,7 +2,7 @@
   <img src="assets/taco_logo.png" width="200" height="200">
 </p>
 
-# TACO(Topics in Algorithmic COde generation dataset)
+# TACO(Topics in Algorithmic Code generation dataset)
 <p align="center">
         🤗 <a href="https://huggingface.co/datasets/BAAI/TACO">Hugging Face</a>&nbsp&nbsp | &nbsp&nbsp <a href="https://data.baai.ac.cn/details/BAAI-TACO"><img src="assets/baai.png" width="18"/> BAAI DataHub</a>&nbsp&nbsp | &nbsp&nbsp <a href="https://arxiv.org/abs/2312.14852">Paper</a>
 </p>
